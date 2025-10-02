@@ -1,0 +1,34 @@
+{
+  "name": "property-ai-check",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^14.2.18",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.4.5",
+    "@anthropic-ai/sdk": "^0.20.0",
+    "react-dropzone": "^14.2.9",
+    "react-pdf": "^7.7.3",
+    "pdf-lib": "^1.17.1",
+    "zod": "^3.22.4",
+    "lru-cache": "^10.2.2",
+    "lucide-react": "^0.263.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "tailwindcss": "^3.4.3",
+    "postcss": "^8.4.38",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.18"
+  }
+}
