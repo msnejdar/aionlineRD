@@ -72,7 +72,7 @@ export async function generateResultsPDF(options: PDFGenerationOptions): Promise
   yPosition -= lineHeight * 2;
 
   // === RECOMMENDATION BOX ===
-  const recColor =
+  const recColor: [number, number, number] =
     finalResults.recommendation === 'approved'
       ? [0, 0.78, 0.33]
       : finalResults.recommendation === 'rejected'
