@@ -2,6 +2,8 @@
 
 Produkční Next.js aplikace pro automatickou AI kontrolu údajů o nemovitostech pomocí Anthropic Claude API.
 
+🚀 **Vercel Deployment Ready**
+
 ## 🎯 Hlavní funkce
 
 - ✅ Automatická kontrola údajů o nemovitosti oproti fotodokumentaci
