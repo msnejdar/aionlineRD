@@ -192,7 +192,7 @@ export default function HomePage() {
               📤 Nahrání dokumentů
             </h3>
             <p className="text-sm text-gray-600 mb-6">
-              Nahrajte standardizovaný PDF formulář "Ocenění rodinného domu" a minimálně 8 fotografií nemovitosti.
+              Nahrajte standardizovaný PDF formulář &quot;Ocenění rodinného domu&quot; a minimálně 8 fotografií nemovitosti.
               AI automaticky extrahuje data z PDF a zkontroluje je oproti fotografiím.
             </p>
 

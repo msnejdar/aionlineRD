@@ -85,7 +85,7 @@ export default function PDFUploader({ onFileChange }: PDFUploaderProps) {
               <p className="text-gray-700 font-medium">Přetáhněte PDF formulář sem</p>
               <p className="text-gray-500 text-sm mt-2">nebo klikněte pro výběr</p>
               <p className="text-gray-400 text-xs mt-2">
-                Standardizovaný formulář "Ocenění rodinného domu" • Max 10MB
+                Standardizovaný formulář &quot;Ocenění rodinného domu&quot; • Max 10MB
               </p>
             </div>
           )}
