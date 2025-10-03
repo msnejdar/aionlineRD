@@ -1,4 +1,4 @@
-# 🏠 AI Kontrola Nemovitostí - Česká spořitelna
+# 🏠 AI Kontrola Nemovitostí
 
 Produkční Next.js aplikace pro automatickou AI kontrolu údajů o nemovitostech pomocí Anthropic Claude API.
 
@@ -7,9 +7,10 @@ Produkční Next.js aplikace pro automatickou AI kontrolu údajů o nemovitostec
 ## 🎯 Hlavní funkce
 
 - ✅ Automatická kontrola údajů o nemovitosti oproti fotodokumentaci
+- ✅ Extrakce dat z PDF formuláře pomocí AI
 - ✅ Detekce odmítacích kritérií (rekonstrukce, praskliny, poškození)
 - ✅ Orientační výpočet podlahové plochy z fotografií
-- ✅ Manuální editace výsledků bankéřem
+- ✅ Manuální editace výsledků
 - ✅ Export výsledků do PDF s barevným označením
 
 ## 🚀 Rychlý start

@@ -13,7 +13,7 @@ interface PDFAnalysisRequest {
 function constructPDFPrompt(): string {
   const today = new Date().toISOString().split('T')[0];
 
-  return `Jsi expert na oceňování nemovitostí pro Českou spořitelnu.
+  return `Jsi expert na oceňování nemovitostí.
 
 TVŮJ ÚKOL:
 1. PŘEČTI PDF formulář "Ocenění rodinného domu" a EXTRAHUJ všechny údaje

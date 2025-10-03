@@ -70,7 +70,7 @@ export default function PDFUploader({ onFileChange }: PDFUploaderProps) {
   return (
     <div className="space-y-4">
       <label className="block font-semibold text-gray-800">
-        📄 PDF Formulář České spořitelny
+        📄 PDF Formulář s oceněním nemovitosti
         <span className="text-red-500 ml-1">*</span>
       </label>
 

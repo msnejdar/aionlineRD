@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'AI Kontrola Nemovitostí | Česká spořitelna',
+  title: 'AI Kontrola Nemovitostí',
   description: 'Automatická kontrola údajů o nemovitostech pomocí umělé inteligence',
 };
 

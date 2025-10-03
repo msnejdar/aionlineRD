@@ -45,7 +45,7 @@ export default function LoginPage() {
             <Lock className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-gray-800 mb-2">AI Kontrola Nemovitostí</h1>
-          <p className="text-gray-600">Česká spořitelna</p>
+          <p className="text-gray-600">Automatické vyhodnocení nemovitostí</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -74,7 +74,7 @@ export default function LoginPage() {
         </form>
 
         <p className="text-xs text-gray-500 text-center mt-6">
-          Pouze autorizovaný personál České spořitelny
+          Pouze pro autorizovaný personál
         </p>
       </div>
     </div>

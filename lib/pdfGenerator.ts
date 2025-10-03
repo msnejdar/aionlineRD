@@ -68,7 +68,7 @@ export async function generateResultsPDF(options: PDFGenerationOptions): Promise
   // === HEADER ===
   drawText('VÝSLEDEK KONTROLY NEMOVITOSTI', leftMargin, yPosition, { bold: true });
   yPosition -= lineHeight;
-  drawText('Česká spořitelna', leftMargin, yPosition);
+  drawText('AI Automatická Kontrola', leftMargin, yPosition);
   yPosition -= lineHeight * 2;
 
   // === RECOMMENDATION BOX ===
@@ -213,7 +213,7 @@ export async function generateResultsPDF(options: PDFGenerationOptions): Promise
   // === FOOTER ===
   const now = new Date().toLocaleString('cs-CZ');
   drawText(`Datum kontroly: ${now}`, leftMargin, 30);
-  drawText('Zpracováno AI systémem České spořitelny', leftMargin, 15);
+  drawText('Zpracováno pomocí umělé inteligence (Claude AI)', leftMargin, 15);
 
   const pdfBytes = await pdfDoc.save();
   return pdfBytes;

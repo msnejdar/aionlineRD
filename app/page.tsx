@@ -140,7 +140,7 @@ export default function HomePage() {
             </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-800">AI Kontrola Nemovitostí</h1>
-              <p className="text-sm text-gray-600">Česká spořitelna - Automatická kontrola z PDF</p>
+              <p className="text-sm text-gray-600">Automatická kontrola z PDF pomocí AI</p>
             </div>
           </div>
           <button onClick={handleLogout} className="glass-button-secondary flex items-center gap-2">
