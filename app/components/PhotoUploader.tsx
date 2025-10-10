@@ -107,7 +107,7 @@ export default function PhotoUploader({ onFilesChange }: PhotoUploaderProps) {
       <label className="block font-semibold text-gray-800">
         📸 Fotodokumentace nemovitosti
         <span className="text-red-500 ml-1">*</span>
-        <span className="text-sm font-normal text-gray-600 ml-2">(Minimálně 8 fotografií)</span>
+        <span className="text-sm font-normal text-gray-600 ml-2">(Maximálně 30 fotografií)</span>
       </label>
 
       <div {...getRootProps()} className={`dropzone ${isDragActive ? 'active' : ''}`}>
@@ -120,7 +120,7 @@ export default function PhotoUploader({ onFilesChange }: PhotoUploaderProps) {
             <p className="text-gray-700 font-medium">Přetáhněte fotografie sem</p>
             <p className="text-gray-500 text-sm mt-2">nebo klikněte pro výběr</p>
             <p className="text-gray-400 text-xs mt-2">
-              JPG, PNG • Min 8 fotek • Max 30 fotek • Max 10MB per foto
+              JPG, PNG • Max 30 fotek • Max 10MB per foto
             </p>
           </div>
         )}
@@ -143,9 +143,8 @@ export default function PhotoUploader({ onFilesChange }: PhotoUploaderProps) {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <p className="text-sm font-medium text-gray-700">
-              Nahráno: {files.length} / 30 {files.length < 8 && <span className="text-red-500">(min. 8)</span>}
+              Nahráno: {files.length} / 30
             </p>
-            {files.length >= 8 && <span className="text-green-600 text-sm font-medium">✓ Splněno</span>}
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { Home, FileCheck, Download, LogOut } from 'lucide-react';
 import PDFUploader from './components/PDFUploader';
 import PhotoUploader from './components/PhotoUploader';
+import CadastralMapUploader from './components/CadastralMapUploader';
+import TechnicalDocUploader from './components/TechnicalDocUploader';
 import LoadingAnimation from './components/LoadingAnimation';
 import ResultsPanel from './components/ResultsPanel';
 import ManualReview from './components/ManualReview';
@@ -22,6 +24,14 @@ export default function HomePage() {
     files: [],
     base64s: [],
   });
+  const [cadastralMap, setCadastralMap] = useState<{ file: File | null; base64: string }>({
+    file: null,
+    base64: '',
+  });
+  const [technicalDoc, setTechnicalDoc] = useState<{ file: File | null; base64: string }>({
+    file: null,
+    base64: '',
+  });
   const [results, setResults] = useState<PDFAnalysisResponse | null>(null);
   const [manualEdits, setManualEdits] = useState<Partial<AIResponse> | null>(null);
   const [bankOfficerNote, setBankOfficerNote] = useState('');
@@ -36,9 +46,17 @@ export default function HomePage() {
     setPhotos({ files, base64s });
   };
 
+  const handleCadastralMapChange = (file: File | null, base64: string) => {
+    setCadastralMap({ file, base64 });
+  };
+
+  const handleTechnicalDocChange = (file: File | null, base64: string) => {
+    setTechnicalDoc({ file, base64 });
+  };
+
   const handleAnalyze = async () => {
-    if (!pdfFile || photos.files.length < 8) {
-      setError('Nahrajte prosím PDF formulář a minimálně 8 fotografií');
+    if (!pdfFile || photos.files.length === 0) {
+      setError('Nahrajte prosím PDF formulář a fotografie');
       return;
     }
 
@@ -49,6 +67,8 @@ export default function HomePage() {
       const requestBody = {
         pdfBase64,
         photos: photos.base64s,
+        cadastralMap: cadastralMap.base64 || undefined,
+        technicalDoc: technicalDoc.base64 || undefined,
       };
 
       const response = await fetch('/api/analyze-property-pdf', {
@@ -123,6 +143,8 @@ export default function HomePage() {
     setPdfFile(null);
     setPdfBase64('');
     setPhotos({ files: [], base64s: [] });
+    setCadastralMap({ file: null, base64: '' });
+    setTechnicalDoc({ file: null, base64: '' });
     setResults(null);
     setManualEdits(null);
     setBankOfficerNote('');
@@ -192,20 +214,22 @@ export default function HomePage() {
               📤 Nahrání dokumentů
             </h3>
             <p className="text-sm text-gray-600 mb-6">
-              Nahrajte standardizovaný PDF formulář &quot;Ocenění rodinného domu&quot; a minimálně 8 fotografií nemovitosti.
+              Nahrajte standardizovaný PDF formulář &quot;Ocenění rodinného domu&quot; a fotografie nemovitosti (maximálně 30).
               AI automaticky extrahuje data z PDF a zkontroluje je oproti fotografiím.
             </p>
 
             <div className="space-y-8">
               <PDFUploader onFileChange={handlePDFChange} />
               <PhotoUploader onFilesChange={handlePhotosChange} />
+              <CadastralMapUploader onFileChange={handleCadastralMapChange} />
+              <TechnicalDocUploader onFileChange={handleTechnicalDocChange} />
             </div>
           </div>
 
           <div className="flex justify-end">
             <button
               onClick={handleAnalyze}
-              disabled={!pdfFile || photos.files.length < 8}
+              disabled={!pdfFile || photos.files.length === 0}
               className="glass-button-primary flex items-center gap-2"
             >
               <FileCheck className="w-5 h-5" />

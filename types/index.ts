@@ -71,10 +71,17 @@ export interface FieldValidation {
 export interface FloorAreaEstimate {
   calculated: number;
   confidence: number;
-  method: 'projectDocumentation' | 'interiorPhotos' | 'exteriorEstimate';
+  method: 'technicalDocumentation' | 'projectDocumentation' | 'interiorPhotos' | 'exteriorEstimate';
   details: string;
   matchesClientData: boolean;
   difference?: number;
+}
+
+export interface CadastralMapCheck {
+  available: boolean;
+  landAreaMatches: boolean | null;
+  buildingLocationCorrect: boolean | null;
+  notes: string;
 }
 
 export interface PropertyIssues {
@@ -84,6 +91,11 @@ export interface PropertyIssues {
   facadeDamagePercent: number;
   missingPhotos: string[];
   photosOutdated: boolean;
+  incompleteExteriorCoverage: {
+    isRowHouse: boolean;
+    missingDirections: string[];
+    severity: 'critical' | 'acceptable' | 'complete';
+  };
 }
 
 export type RecommendationType = 'approved' | 'rejected' | 'manualReview';
@@ -102,6 +114,7 @@ export interface AIResponse {
     totalFloorArea: FieldValidation;
   };
   floorAreaEstimate: FloorAreaEstimate;
+  cadastralMapCheck: CadastralMapCheck;
   issues: PropertyIssues;
   recommendation: RecommendationType;
   summary: string;
