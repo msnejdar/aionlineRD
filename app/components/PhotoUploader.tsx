@@ -104,22 +104,30 @@ export default function PhotoUploader({ onFilesChange }: PhotoUploaderProps) {
 
   return (
     <div className="space-y-4">
-      <label className="block font-semibold text-gray-800">
+      <label className="block font-semibold" style={{ color: 'var(--color-text)' }}>
         📸 Fotodokumentace nemovitosti
-        <span className="text-red-500 ml-1">*</span>
-        <span className="text-sm font-normal text-gray-600 ml-2">(Maximálně 30 fotografií)</span>
+        <span style={{ color: 'var(--color-error)', marginLeft: '4px' }}>*</span>
+        <span className="text-sm font-normal ml-2" style={{ color: 'var(--color-neutral-medium)' }}>
+          (Maximálně 30 fotografií)
+        </span>
       </label>
 
       <div {...getRootProps()} className={`dropzone ${isDragActive ? 'active' : ''}`}>
         <input {...getInputProps()} />
-        <Upload className="w-12 h-12 mx-auto mb-4 text-gray-600" />
+        <Upload className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--color-neutral-medium)' }} />
         {isDragActive ? (
-          <p className="text-gray-700 font-medium">Pusťte fotografie zde...</p>
+          <p className="font-medium" style={{ color: 'var(--color-primary)' }}>
+            Pusťte fotografie zde...
+          </p>
         ) : (
           <div>
-            <p className="text-gray-700 font-medium">Přetáhněte fotografie sem</p>
-            <p className="text-gray-500 text-sm mt-2">nebo klikněte pro výběr</p>
-            <p className="text-gray-400 text-xs mt-2">
+            <p className="font-medium" style={{ color: 'var(--color-text)' }}>
+              Přetáhněte fotografie sem
+            </p>
+            <p className="text-sm mt-2" style={{ color: 'var(--color-neutral-medium)' }}>
+              nebo klikněte pro výběr
+            </p>
+            <p className="text-xs mt-2" style={{ color: 'var(--color-neutral-medium)' }}>
               JPG, PNG • Max 30 fotek • Max 10MB per foto
             </p>
           </div>
@@ -127,22 +135,24 @@ export default function PhotoUploader({ onFilesChange }: PhotoUploaderProps) {
       </div>
 
       {error && (
-        <div className="text-red-500 text-sm backdrop-blur-lg bg-red-50/80 border border-red-200 rounded-lg p-3">
-          {error}
+        <div className="alert alert-error">
+          <p style={{ fontSize: '0.95rem' }}>{error}</p>
         </div>
       )}
 
       {loading && (
         <div className="text-center py-4">
           <div className="loading-shimmer h-2 rounded"></div>
-          <p className="text-sm text-gray-600 mt-2">Nahrávání a optimalizace fotografií...</p>
+          <p className="text-sm mt-2" style={{ color: 'var(--color-neutral-medium)' }}>
+            Nahrávání a optimalizace fotografií...
+          </p>
         </div>
       )}
 
       {files.length > 0 && (
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <p className="text-sm font-medium text-gray-700">
+            <p className="text-sm font-medium" style={{ color: 'var(--color-text)' }}>
               Nahráno: {files.length} / 30
             </p>
           </div>

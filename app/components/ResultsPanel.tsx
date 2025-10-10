@@ -23,23 +23,53 @@ export default function ResultsPanel({ results, formData }: ResultsPanelProps) {
   };
 
   const getRecommendationBadge = () => {
+    const badgeStyle = {
+      padding: '16px 24px',
+      borderRadius: 'var(--radius-md)',
+      fontWeight: 700,
+      fontSize: '1.125rem',
+      boxShadow: 'var(--shadow-elevation-2)',
+      border: '2px solid'
+    };
+
     switch (results.recommendation) {
       case 'approved':
         return (
-          <div className="bg-success/20 border-2 border-success text-success px-6 py-3 rounded-xl font-bold text-lg">
+          <div
+            style={{
+              ...badgeStyle,
+              background: 'var(--color-success-lighter)',
+              borderColor: 'var(--color-success)',
+              color: 'var(--color-success)'
+            }}
+          >
             ✅ SCHVÁLENO
           </div>
         );
       case 'rejected':
         return (
-          <div className="bg-error/20 border-2 border-error text-error px-6 py-3 rounded-xl font-bold text-lg">
+          <div
+            style={{
+              ...badgeStyle,
+              background: 'var(--color-error-lighter)',
+              borderColor: 'var(--color-error)',
+              color: 'var(--color-error)'
+            }}
+          >
             ❌ ZAMÍTNUTO
           </div>
         );
       case 'manualReview':
         return (
-          <div className="bg-warning/20 border-2 border-warning text-warning px-6 py-3 rounded-xl font-bold text-lg">
-            ⚠️  MANUÁLNÍ KONTROLA
+          <div
+            style={{
+              ...badgeStyle,
+              background: 'var(--color-warning-lighter)',
+              borderColor: 'var(--color-warning)',
+              color: 'var(--color-warning)'
+            }}
+          >
+            ⚠️ MANUÁLNÍ KONTROLA
           </div>
         );
     }
@@ -61,11 +91,13 @@ export default function ResultsPanel({ results, formData }: ResultsPanelProps) {
   return (
     <div className="space-y-6 fade-in">
       {/* DOPORUČENÍ */}
-      <div className="glass-panel text-center">{getRecommendationBadge()}</div>
+      <div className="card text-center">{getRecommendationBadge()}</div>
 
       {/* VALIDACE POLÍ */}
-      <div className="glass-panel">
-        <h3 className="text-2xl font-bold mb-6 text-gray-800">📋 Výsledky kontroly polí</h3>
+      <div className="card">
+        <h3 className="mb-6" style={{ fontSize: '1.5rem', fontWeight: 600 }}>
+          📋 Výsledky kontroly polí
+        </h3>
         <div className="space-y-4">
           {fields.map((field) => {
             const validation = results.validation[field.key];

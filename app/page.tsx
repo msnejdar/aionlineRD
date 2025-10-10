@@ -152,142 +152,180 @@ export default function HomePage() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* HEADER */}
-      <div className="glass-panel fade-in">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary-dark rounded-xl flex items-center justify-center">
-              <Home className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-800">AI Kontrola Nemovitostí</h1>
-              <p className="text-sm text-gray-600">Automatická kontrola z PDF pomocí AI</p>
-            </div>
-          </div>
-          <button onClick={handleLogout} className="glass-button-secondary flex items-center gap-2">
-            <LogOut className="w-4 h-4" />
-            Odhlásit se
-          </button>
-        </div>
-      </div>
-
-      {/* PROGRESS INDICATOR */}
-      <div className="glass-panel fade-in">
-        <div className="flex items-center justify-between">
-          {['upload', 'analyzing', 'results'].map((s, idx) => (
-            <div key={s} className="flex items-center flex-1">
+    <div className="page-wrapper">
+      <div className="content-wrapper space-y-6">
+        {/* HEADER */}
+        <div className="card fade-in" style={{ boxShadow: 'var(--shadow-elevation-2)' }}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
               <div
-                className={`flex items-center justify-center w-10 h-10 rounded-full font-bold ${
-                  step === s
-                    ? 'bg-primary text-white'
-                    : ['upload', 'analyzing', 'results'].indexOf(step) > idx
-                    ? 'bg-success text-white'
-                    : 'bg-white/50 text-gray-400'
-                }`}
+                className="w-14 h-14 flex items-center justify-center"
+                style={{
+                  background: 'var(--color-primary)',
+                  borderRadius: 'var(--radius-md)',
+                  boxShadow: 'var(--shadow-elevation-3)'
+                }}
               >
-                {idx + 1}
+                <Home className="w-7 h-7 text-white" />
               </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium">
-                  {s === 'upload' ? 'Nahrání' : s === 'analyzing' ? 'Analýza' : 'Výsledky'}
+              <div>
+                <h1 style={{ fontSize: '1.75rem', marginBottom: '4px' }}>AI Kontrola Nemovitostí</h1>
+                <p style={{ color: 'var(--color-neutral-medium)', fontSize: '0.95rem' }}>
+                  Automatická kontrola z PDF pomocí AI
                 </p>
               </div>
-              {idx < 2 && <div className="flex-1 h-1 bg-white/30 mx-4"></div>}
             </div>
-          ))}
+            <button onClick={handleLogout} className="btn btn-secondary">
+              <LogOut className="w-4 h-4" />
+              Odhlásit se
+            </button>
+          </div>
         </div>
+
+        {/* PROGRESS INDICATOR */}
+        <div className="card fade-in" style={{ boxShadow: 'var(--shadow-elevation-1)' }}>
+          <div className="flex items-center justify-between">
+            {['upload', 'analyzing', 'results'].map((s, idx) => {
+              const stepIndex = ['upload', 'analyzing', 'results'].indexOf(step);
+              const isActive = step === s;
+              const isCompleted = stepIndex > idx;
+
+              return (
+                <div key={s} className="flex items-center flex-1">
+                  <div
+                    className={`progress-step ${
+                      isActive ? 'active' : isCompleted ? 'completed' : 'pending'
+                    }`}
+                  >
+                    {idx + 1}
+                  </div>
+                  <div className="ml-3">
+                    <p
+                      className="text-sm font-medium"
+                      style={{
+                        color: isActive || isCompleted ? 'var(--color-primary)' : 'var(--color-neutral-medium)'
+                      }}
+                    >
+                      {s === 'upload' ? 'Nahrání' : s === 'analyzing' ? 'Analýza' : 'Výsledky'}
+                    </p>
+                  </div>
+                  {idx < 2 && (
+                    <div
+                      className="flex-1 h-1 mx-4"
+                      style={{
+                        background: isCompleted ? 'var(--color-success)' : 'var(--color-neutral-light)',
+                        borderRadius: '2px'
+                      }}
+                    ></div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ERROR MESSAGE */}
+        {error && (
+          <div className="alert alert-error fade-in">
+            <p className="font-medium">{error}</p>
+          </div>
+        )}
+
+        {/* STEP: UPLOAD */}
+        {step === 'upload' && (
+          <div className="space-y-6">
+            <div className="card fade-in">
+              <h3 className="mb-6" style={{ fontSize: '1.5rem', fontWeight: 600 }}>
+                📤 Nahrání dokumentů
+              </h3>
+              <p className="mb-6" style={{ color: 'var(--color-neutral-medium)', fontSize: '0.95rem' }}>
+                Nahrajte standardizovaný PDF formulář &quot;Ocenění rodinného domu&quot; a fotografie nemovitosti
+                (maximálně 30). AI automaticky extrahuje data z PDF a zkontroluje je oproti fotografiím.
+              </p>
+
+              <div className="space-y-8">
+                <PDFUploader onFileChange={handlePDFChange} />
+                <PhotoUploader onFilesChange={handlePhotosChange} />
+                <CadastralMapUploader onFileChange={handleCadastralMapChange} />
+                <TechnicalDocUploader onFileChange={handleTechnicalDocChange} />
+              </div>
+            </div>
+
+            <div className="flex justify-end">
+              <button
+                onClick={handleAnalyze}
+                disabled={!pdfFile || photos.files.length === 0}
+                className="btn btn-accent"
+              >
+                <FileCheck className="w-5 h-5" />
+                Analyzovat nemovitost
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* STEP: ANALYZING */}
+        {step === 'analyzing' && <LoadingAnimation message="Analyzuji PDF a fotografie..." />}
+
+        {/* STEP: RESULTS */}
+        {step === 'results' && results && (
+          <div className="space-y-6">
+            {/* Extracted Data Section */}
+            <div className="card fade-in">
+              <h3 className="mb-4" style={{ fontSize: '1.5rem', fontWeight: 600 }}>
+                📄 Extrahovaná data z PDF
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ fontSize: '0.95rem' }}>
+                <div>
+                  <p className="font-semibold" style={{ color: 'var(--color-primary)', marginBottom: '4px' }}>
+                    Adresa:
+                  </p>
+                  <p style={{ color: 'var(--color-text)' }}>
+                    {results.extractedData.address.street} {results.extractedData.address.houseNumber}
+                  </p>
+                  <p style={{ color: 'var(--color-text)' }}>
+                    {results.extractedData.address.zipCode} {results.extractedData.address.city}
+                  </p>
+                </div>
+                <div>
+                  <p className="font-semibold" style={{ color: 'var(--color-primary)', marginBottom: '4px' }}>
+                    Dispozice:
+                  </p>
+                  <p style={{ color: 'var(--color-text)' }}>{results.extractedData.layout}</p>
+                </div>
+                <div>
+                  <p className="font-semibold" style={{ color: 'var(--color-primary)', marginBottom: '4px' }}>
+                    Stav:
+                  </p>
+                  <p style={{ color: 'var(--color-text)' }}>{results.extractedData.propertyCondition}</p>
+                </div>
+                <div>
+                  <p className="font-semibold" style={{ color: 'var(--color-primary)', marginBottom: '4px' }}>
+                    Plocha:
+                  </p>
+                  <p style={{ color: 'var(--color-text)' }}>Pozemek: {results.extractedData.landArea} m²</p>
+                  <p style={{ color: 'var(--color-text)' }}>Zastavěná: {results.extractedData.builtUpArea} m²</p>
+                  <p style={{ color: 'var(--color-text)' }}>Celková: {results.extractedData.totalFloorArea} m²</p>
+                </div>
+              </div>
+            </div>
+
+            <ResultsPanel results={results} formData={results.extractedData as any} />
+
+            <ManualReview results={results} formData={results.extractedData as any} onSave={handleManualSave} />
+
+            <div className="flex justify-between">
+              <button onClick={handleReset} className="btn btn-secondary">
+                🔄 Nová kontrola
+              </button>
+              <button onClick={handleExportPDF} className="btn btn-success">
+                <Download className="w-5 h-5" />
+                Exportovat PDF
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* ERROR MESSAGE */}
-      {error && (
-        <div className="glass-panel bg-error/10 border-2 border-error fade-in">
-          <p className="text-error font-medium">{error}</p>
-        </div>
-      )}
-
-      {/* STEP: UPLOAD */}
-      {step === 'upload' && (
-        <div className="space-y-6">
-          <div className="glass-panel fade-in">
-            <h3 className="text-xl font-bold mb-6 text-gray-800">
-              📤 Nahrání dokumentů
-            </h3>
-            <p className="text-sm text-gray-600 mb-6">
-              Nahrajte standardizovaný PDF formulář &quot;Ocenění rodinného domu&quot; a fotografie nemovitosti (maximálně 30).
-              AI automaticky extrahuje data z PDF a zkontroluje je oproti fotografiím.
-            </p>
-
-            <div className="space-y-8">
-              <PDFUploader onFileChange={handlePDFChange} />
-              <PhotoUploader onFilesChange={handlePhotosChange} />
-              <CadastralMapUploader onFileChange={handleCadastralMapChange} />
-              <TechnicalDocUploader onFileChange={handleTechnicalDocChange} />
-            </div>
-          </div>
-
-          <div className="flex justify-end">
-            <button
-              onClick={handleAnalyze}
-              disabled={!pdfFile || photos.files.length === 0}
-              className="glass-button-primary flex items-center gap-2"
-            >
-              <FileCheck className="w-5 h-5" />
-              Analyzovat nemovitost
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* STEP: ANALYZING */}
-      {step === 'analyzing' && (
-        <LoadingAnimation message="Analyzuji PDF a fotografie..." />
-      )}
-
-      {/* STEP: RESULTS */}
-      {step === 'results' && results && (
-        <div className="space-y-6">
-          {/* Extracted Data Section */}
-          <div className="glass-panel fade-in">
-            <h3 className="text-2xl font-bold mb-4 text-gray-800">📄 Extrahovaná data z PDF</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div>
-                <p className="font-semibold">Adresa:</p>
-                <p>{results.extractedData.address.street} {results.extractedData.address.houseNumber}</p>
-                <p>{results.extractedData.address.zipCode} {results.extractedData.address.city}</p>
-              </div>
-              <div>
-                <p className="font-semibold">Dispozice:</p>
-                <p>{results.extractedData.layout}</p>
-              </div>
-              <div>
-                <p className="font-semibold">Stav:</p>
-                <p>{results.extractedData.propertyCondition}</p>
-              </div>
-              <div>
-                <p className="font-semibold">Plocha:</p>
-                <p>Pozemek: {results.extractedData.landArea} m²</p>
-                <p>Zastavěná: {results.extractedData.builtUpArea} m²</p>
-                <p>Celková: {results.extractedData.totalFloorArea} m²</p>
-              </div>
-            </div>
-          </div>
-
-          <ResultsPanel results={results} formData={results.extractedData as any} />
-
-          <ManualReview results={results} formData={results.extractedData as any} onSave={handleManualSave} />
-
-          <div className="flex justify-between">
-            <button onClick={handleReset} className="glass-button-secondary">
-              🔄 Nová kontrola
-            </button>
-            <button onClick={handleExportPDF} className="glass-button-primary flex items-center gap-2">
-              <Download className="w-5 h-5" />
-              Exportovat PDF
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -38,23 +38,39 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="glass-panel max-w-md w-full fade-in">
+    <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--color-bg)' }}>
+      <div className="card max-w-md w-full fade-in" style={{ boxShadow: 'var(--shadow-elevation-4)', margin: '24px' }}>
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-dark rounded-2xl mx-auto mb-4 flex items-center justify-center">
-            <Lock className="w-8 h-8 text-white" />
+          <div
+            className="w-20 h-20 mx-auto mb-4 flex items-center justify-center"
+            style={{
+              background: 'var(--color-primary)',
+              borderRadius: 'var(--radius-lg)',
+              boxShadow: 'var(--shadow-elevation-3)'
+            }}
+          >
+            <Lock className="w-10 h-10 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">AI Kontrola Nemovitostí</h1>
-          <p className="text-gray-600">Automatické vyhodnocení nemovitostí</p>
+          <h1 className="mb-2" style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-primary)' }}>
+            AI Kontrola Nemovitostí
+          </h1>
+          <p style={{ color: 'var(--color-neutral-medium)', fontSize: '1rem' }}>
+            Automatické vyhodnocení nemovitostí
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium mb-2">Heslo</label>
+            <label
+              className="block mb-2"
+              style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--color-text)' }}
+            >
+              Heslo
+            </label>
             <input
               type="password"
               required
-              className="glass-input"
+              className="input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Zadejte heslo..."
@@ -63,17 +79,19 @@ export default function LoginPage() {
           </div>
 
           {error && (
-            <div className="text-error text-sm backdrop-blur-lg bg-error/10 border border-error rounded-lg p-3">
-              {error}
+            <div className="alert alert-error">
+              <p className="font-medium" style={{ fontSize: '0.95rem' }}>
+                {error}
+              </p>
             </div>
           )}
 
-          <button type="submit" disabled={loading} className="glass-button-primary w-full">
+          <button type="submit" disabled={loading} className="btn btn-primary w-full">
             {loading ? 'Přihlašování...' : 'Přihlásit se'}
           </button>
         </form>
 
-        <p className="text-xs text-gray-500 text-center mt-6">
+        <p className="text-center mt-6" style={{ fontSize: '0.875rem', color: 'var(--color-neutral-medium)' }}>
           Pouze pro autorizovaný personál
         </p>
       </div>

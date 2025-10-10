@@ -69,37 +69,63 @@ export default function PDFUploader({ onFileChange }: PDFUploaderProps) {
 
   return (
     <div className="space-y-4">
-      <label className="block font-semibold text-gray-800">
+      <label className="block font-semibold" style={{ color: 'var(--color-text)' }}>
         📄 PDF Formulář s oceněním nemovitosti
-        <span className="text-red-500 ml-1">*</span>
+        <span style={{ color: 'var(--color-error)', marginLeft: '4px' }}>*</span>
       </label>
 
       {!file ? (
         <div {...getRootProps()} className={`dropzone ${isDragActive ? 'active' : ''}`}>
           <input {...getInputProps()} />
-          <FileText className="w-12 h-12 mx-auto mb-4 text-gray-600" />
+          <FileText className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--color-neutral-medium)' }} />
           {isDragActive ? (
-            <p className="text-gray-700 font-medium">Pusťte PDF soubor zde...</p>
+            <p className="font-medium" style={{ color: 'var(--color-primary)' }}>
+              Pusťte PDF soubor zde...
+            </p>
           ) : (
             <div>
-              <p className="text-gray-700 font-medium">Přetáhněte PDF formulář sem</p>
-              <p className="text-gray-500 text-sm mt-2">nebo klikněte pro výběr</p>
-              <p className="text-gray-400 text-xs mt-2">
+              <p className="font-medium" style={{ color: 'var(--color-text)' }}>
+                Přetáhněte PDF formulář sem
+              </p>
+              <p className="text-sm mt-2" style={{ color: 'var(--color-neutral-medium)' }}>
+                nebo klikněte pro výběr
+              </p>
+              <p className="text-xs mt-2" style={{ color: 'var(--color-neutral-medium)' }}>
                 Standardizovaný formulář &quot;Ocenění rodinného domu&quot; • Max 10MB
               </p>
             </div>
           )}
         </div>
       ) : (
-        <div className="backdrop-blur-lg bg-white/70 border-2 border-green-500 rounded-xl p-4 fade-in">
+        <div
+          className="fade-in"
+          style={{
+            background: 'var(--color-success-lighter)',
+            border: '2px solid var(--color-success)',
+            borderRadius: 'var(--radius-md)',
+            padding: 'var(--spacing-sm)',
+            boxShadow: 'var(--shadow-elevation-2)'
+          }}
+        >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <FileText className="w-6 h-6 text-green-600" />
+              <div
+                className="flex items-center justify-center"
+                style={{
+                  width: '48px',
+                  height: '48px',
+                  background: 'white',
+                  borderRadius: 'var(--radius-sm)',
+                  boxShadow: 'var(--shadow-elevation-1)'
+                }}
+              >
+                <FileText className="w-6 h-6" style={{ color: 'var(--color-success)' }} />
               </div>
               <div>
-                <p className="font-semibold text-gray-800">{preview}</p>
-                <p className="text-sm text-gray-600">
+                <p className="font-semibold" style={{ color: 'var(--color-text)' }}>
+                  {preview}
+                </p>
+                <p className="text-sm" style={{ color: 'var(--color-neutral-medium)' }}>
                   {(file.size / 1024).toFixed(0)} KB
                 </p>
               </div>
@@ -107,7 +133,20 @@ export default function PDFUploader({ onFileChange }: PDFUploaderProps) {
             <button
               type="button"
               onClick={removeFile}
-              className="bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors"
+              className="rounded-full p-2 transition-colors"
+              style={{
+                background: 'var(--color-error)',
+                color: 'white',
+                boxShadow: 'var(--shadow-elevation-2)'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = 'var(--color-error-light)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-elevation-3)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = 'var(--color-error)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-elevation-2)';
+              }}
             >
               <X className="w-4 h-4" />
             </button>
@@ -116,15 +155,17 @@ export default function PDFUploader({ onFileChange }: PDFUploaderProps) {
       )}
 
       {error && (
-        <div className="text-red-500 text-sm backdrop-blur-lg bg-red-50/80 border border-red-200 rounded-lg p-3">
-          {error}
+        <div className="alert alert-error">
+          <p style={{ fontSize: '0.95rem' }}>{error}</p>
         </div>
       )}
 
       {loading && (
         <div className="text-center py-2">
           <div className="loading-shimmer h-2 rounded"></div>
-          <p className="text-sm text-gray-600 mt-2">Načítání PDF...</p>
+          <p className="text-sm mt-2" style={{ color: 'var(--color-neutral-medium)' }}>
+            Načítání PDF...
+          </p>
         </div>
       )}
     </div>
